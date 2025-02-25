@@ -19,3 +19,10 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
+
+function logshit() {
+  let zona = document.getElementById('zona').value;
+  let manzana = document.getElementById('manzana').value;
+  let lote = document.getElementById('lote').value;
+  console.log(zona, manzana, lote);
+}
