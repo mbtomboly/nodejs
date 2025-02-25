@@ -57,7 +57,8 @@ router.get('/scrap', (req, res) => {
 	const browser = await puppeteer.launch({
         headless: true,
         slowMo: 200,
-        args: [`--window-size=1400,880`],
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        ignoreDefaultArgs: ['--disable-extensions'],
         defaultViewport: {
           width:1400,
           height:880
@@ -89,7 +90,7 @@ router.get('/scrap', (req, res) => {
     let zona = body.zona;
     let manzana = body.manzana;
     let lote = body.lote;
-    
+
     empty = 0;
 
     let inmueble = {};
