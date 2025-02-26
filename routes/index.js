@@ -126,7 +126,7 @@ router.get('/scrap', (req, res) => {
     
     await page.click("#selector-tipo-cuenta > div:nth-child(1) > label > label");
     
-    delay(2000);
+    delay(1000);
     
     await page.click("#root > div > div > section > div:nth-child(2) > nav > div.panel-block > section > div:nth-child(2) > div:nth-child(3) > div > div > div");
 
@@ -161,12 +161,16 @@ router.get('/scrap', (req, res) => {
                         // console.log(await response.json());
                         if (!isCuentas){
                             isCuentas = true;
-                            let res = await response.json();
+                            let res = await response.json().catch((err) => {
+                                console.log('Error: ', err);
+                            });
                             inmueble = res;
                         }
                     } else {
                         let resp = {};
-                        resp = await response.json();
+                        resp = await response.json().catch((err) => {
+                            console.log('Error: ', err);
+                        });
                         if (resp.crs == null) {
                             console.log('VACIO!');
                             let but1 = await page.$('#root > div > div > section > div.column.no-padding > div.modal.is-active > div.modal-card > footer > button');
@@ -178,10 +182,14 @@ router.get('/scrap', (req, res) => {
                             if (!isGolden) {
                                 // console.log('GOLDEN');
                                 isGolden = true;
-                                await moldPlace(await response.json());
+                                await moldPlace(await response.json().catch((err) => {
+                                    console.log('Error: ', err);
+                                }));
                                 let button = await page.$('a[class="ol-popup-closer"]');
                                 await button.evaluate(b => b.click());
-                                let res = await response.json();
+                                let res = await response.json().catch((err) => {
+                                    console.log('Error: ', err);
+                                });
                                 inmueble = {...inmueble, ...res.features[0].properties};
                                 empty = 0;
 
